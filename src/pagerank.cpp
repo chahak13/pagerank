@@ -222,7 +222,11 @@ void Pagerank::calculate_pagerank() {
       pr[i] = h + one_A + one_I;
       diff += fabs(pr[i] - old_pr[i]);
     }
+    error = diff;
     num_iterations++;
+    if (verbose && num_iterations % 100 == 0) {
+      cout << "Iterations: " << num_iterations << ", error: " << error << endl;
+    }
   }
 }
 
@@ -235,8 +239,8 @@ const void Pagerank::print_pagerank() {
 
   for (i = 0; i < num_rows; i++) {
     cout << i << " = " << pr[i] << endl;
+    sum += pr[i];
   }
-  sum += pr[i];
 
   cerr << "s = " << sum << " " << endl;
 }

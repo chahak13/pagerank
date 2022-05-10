@@ -62,9 +62,7 @@ int main(int argc, char *argv[]) {
   filename = parse_args(argc, argv, pr);
   pr.print_params(cerr);
   pr.read_file(filename);
-  pr.print_outgoing();
-  pr.print_matrix();
   pr.calculate_pagerank();
-  pr.print_pagerank();
+  // pr.print_pagerank();
   return 0;
 }
