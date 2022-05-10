@@ -73,6 +73,9 @@ int Pagerank::read_file(const string &filename) {
   size_t linenum = 0;
   string line;
   while (getline(*file, line)) {
+    if (line[0] == '#') {
+      continue;
+    }
     string from_str, to_str;
     size_t from, to;
     size_t pos = line.find(delimeter);
