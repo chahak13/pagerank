@@ -1,3 +1,4 @@
+#include "omp.h"
 #include "pagerank.hpp"
 #include <iostream>
 #include <stdio.h>
@@ -62,7 +63,13 @@ int main(int argc, char *argv[]) {
   filename = parse_args(argc, argv, pr);
   pr.print_params(cerr);
   pr.read_file(filename);
+#ifdef _OPENMP
+  double start = omp_get_wtime();
+#endif
   pr.calculate_pagerank();
-  // pr.print_pagerank();
+#ifdef _OPENMP
+  double end = omp_get_wtime();
+  cout << "Time taken: " << end - start << endl;
+#endif
   return 0;
 }
