@@ -1,5 +1,5 @@
-#include "pagerank.hpp"
 #include "omp.h"
+#include "pagerank.hpp"
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -186,7 +186,7 @@ void Pagerank::calculate_pagerank() {
   old_pr = pr;
 
 #pragma omp parallel shared(pr, old_pr, num_outgoing, epsilon,                 \
-                            max_iterations) private(num_iterations)
+                            max_iterations) private(error, num_iterations)
   {
     while (error > epsilon && num_iterations < max_iterations) {
       sum_pr = 0;
@@ -233,6 +233,7 @@ void Pagerank::calculate_pagerank() {
 
       if (error < epsilon) {
 #pragma omp flush(error)
+#pragma omp flush(num_iterations)
       }
       if (verbose && num_iterations % 100 == 0) {
         cout << "Iterations: " << num_iterations << ", error: " << error
